@@ -14,5 +14,3 @@ cd frameworks/base
 wget https://github.com/Lunaris-AOSP/frameworks_base/commit/5dba3b423221da88f18b7a23b7cd548d80f34deb.patch
 git am 5dba3b423221da88f18b7a23b7cd548d80f34deb.patch
 cd ../..
-
-repo sync
