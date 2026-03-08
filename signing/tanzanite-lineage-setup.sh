@@ -1,6 +1,9 @@
 git clone https://github.com/DeltaOSS/tanzanite_local_manifests.git -b lineage-23.2 .repo/local_manifests
 repo sync
 
+rm -rf external/wpa_supplicant_8
+git clone https://github.com/nathanzerogarage/android_external_wpa_supplicant_8.git -b lineage-23.2 external/wpa_supplicant_8
+
 git clone https://github.com/KyokoDT/signing-keys.git vendor/private/keys
 
 cd packages/apps/Aperture
