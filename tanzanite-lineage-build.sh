@@ -1,0 +1,27 @@
+repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs
+git clone https://github.com/DeltaOSS/local_manifests_tanzanite.git -b lineage-23.2 .repo/local_manifests
+repo sync
+
+rm -rf external/wpa_supplicant_8
+git clone https://github.com/nathanzerogarage/android_external_wpa_supplicant_8.git -b lineage-23.2 external/wpa_supplicant_8 --depth=1
+
+echo "Cloning signing keys.."
+git clone https://github.com/KyokoDT/signing-keys.git vendor/private/keys
+
+echo "Patching.."
+cd packages/apps/Aperture
+wget https://raw.githubusercontent.com/MillenniumOSS/patches/refs/heads/sixteen/packages/apps/Aperture/0001-Aperture-Enable-MediaTek-HFPS-Mode-for-60-FPS-video-.patch
+wget https://github.com/MillenniumOSS/patches/raw/refs/heads/sixteen/packages/apps/Aperture/0002-Aperture-Enable-MediaTek-EIS-and-EIS-preview-mode-fo.patch
+git am 0001-Aperture-Enable-MediaTek-HFPS-Mode-for-60-FPS-video-.patch
+git am 0002-Aperture-Enable-MediaTek-EIS-and-EIS-preview-mode-fo.patch
+cd ../../..
+
+cd frameworks/base
+wget https://github.com/Lunaris-AOSP/frameworks_base/commit/5dba3b423221da88f18b7a23b7cd548d80f34deb.patch
+git am 5dba3b423221da88f18b7a23b7cd548d80f34deb.patch
+cd ../..
+
+echo "Selecting the target with lunch.."
+lunch lineage_tanzanite-bp4a-user
+echo "Starting the build."
+mka bacon
